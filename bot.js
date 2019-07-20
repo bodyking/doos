@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const devs = ['434372713289744385','301493032673345537'];
+const devs = ['409045670943784974','543580014805778433'];
 var prefix = "!";
 const adminprefix = "!"
 const db = require('quick.db');
@@ -30,72 +30,6 @@ const pretty = require('pretty-ms')
 
 ,ti={}  
 ,spee={};
-
-
-
-var prefix = "$";
-client.on('message', message => {
-         if (message.content === prefix + "dt") {
-         if (!message.channel.guild) return message.reply('** This command only for servers **');  
-         var currentTime = new Date(),
-            hours = currentTime.getHours() + 4 ,
-            hours2 = currentTime.getHours() + 3 ,
-            hours3 = currentTime.getHours() + 2 ,
-            hours4 = currentTime.getHours() + 3 ,
-            minutes = currentTime.getMinutes(),
-            seconds = currentTime.getSeconds(),
-            Year = currentTime.getFullYear(),
-            Month = currentTime.getMonth() + 1,
-            Day = currentTime.getDate();
-             var h = hours
-  if(hours > 12) {
-               hours -= 12;
-            } else if(hours == 0) {
-                hours = "12";
-            }  
-             if(hours2 > 12) {
-               hours2 -= 12;
-            } else if(hours2 == 0) {
-                hours2 = "12";
-            
-            }  
-                         if(hours3 > 12) {
-               hours3 -= 12;
-            } else if(hours3 == 0) {
-                hours3 = "12";
-            } 
-            if (minutes < 10) {
-                minutes = '0' + minutes;
-            }
-            var suffix = 'صباحاَ';
-            if (hours >= 12) {
-                suffix = 'مساء';
-                hours = hours - 12;
-            }
-            if (hours == 0) {
-                hours = 12;
-            }
- 
-
-                var Date15= new Discord.RichEmbed()
-                .setThumbnail("https://i.imgur.com/ib3n4Hq.png") 
-                .setTitle( "『التاريخ  والوقت』")
-                .setColor('RANDOM')
-                .setFooter(message.author.username, message.author.avatarURL)
-                .addField('الامارات',
-                "『"+ hours + ":" + minutes +":"+ seconds + "』")
-                 .addField('مكه المكرمه',
-                "『"+ hours2 + ":" + minutes +":"+ seconds  + "』") 
-                .addField('مصر',
-                "『"+ hours3 + ":" + minutes +":"+ seconds  + "』") 
-                
-                .addField('Date',
-                "『"+ Day + "-" + Month + "-" + Year +  "』")
-
-                 message.channel.sendEmbed(Date15);
-        }
-    });
-
 
 
 
@@ -470,6 +404,71 @@ client.on('guildMemberAdd', member=> {
     var role = member.guild.roles.find("name","Member");
     member.addRole(role);
 });
+
+
+
+var prefix = "!";
+client.on('message', message => {
+         if (message.content === prefix + "dt") {
+         if (!message.channel.guild) return message.reply('** This command only for servers **');  
+         var currentTime = new Date(),
+            hours = currentTime.getHours() + 4 ,
+            hours2 = currentTime.getHours() + 3 ,
+            hours3 = currentTime.getHours() + 2 ,
+            hours4 = currentTime.getHours() + 3 ,
+            minutes = currentTime.getMinutes(),
+            seconds = currentTime.getSeconds(),
+            Year = currentTime.getFullYear(),
+            Month = currentTime.getMonth() + 1,
+            Day = currentTime.getDate();
+             var h = hours
+  if(hours > 12) {
+               hours -= 12;
+            } else if(hours == 0) {
+                hours = "12";
+            }  
+             if(hours2 > 12) {
+               hours2 -= 12;
+            } else if(hours2 == 0) {
+                hours2 = "12";
+            
+            }  
+                         if(hours3 > 12) {
+               hours3 -= 12;
+            } else if(hours3 == 0) {
+                hours3 = "12";
+            } 
+            if (minutes < 10) {
+                minutes = '0' + minutes;
+            }
+            var suffix = 'صباحاَ';
+            if (hours >= 12) {
+                suffix = 'مساء';
+                hours = hours - 12;
+            }
+            if (hours == 0) {
+                hours = 12;
+            }
+ 
+
+                var Date15= new Discord.RichEmbed()
+                .setThumbnail("https://i.imgur.com/ib3n4Hq.png") 
+                .setTitle( "『التاريخ  والوقت』")
+                .setColor('RANDOM')
+                .setFooter(message.author.username, message.author.avatarURL)
+                .addField('الامارات',
+                "『"+ hours + ":" + minutes +":"+ seconds + "』")
+                 .addField('مكه المكرمه',
+                "『"+ hours2 + ":" + minutes +":"+ seconds  + "』") 
+                .addField('مصر',
+                "『"+ hours3 + ":" + minutes +":"+ seconds  + "』") 
+                
+                .addField('التريخ',
+                "『"+ Day + "-" + Month + "-" + Year +  "』")
+
+                 message.channel.sendEmbed(Date15);
+        }
+    });
 
 
 
@@ -1098,6 +1097,7 @@ if (message.content.startsWith(prefix + 'help')) { /// This is The DMS Code Send
 『!invites/ يعرض لك  عدد انفايتاتك بالسيرفر 』
 『!invite-codes/يعرض لك روابط الانفايتات حكك في السيرفر 』
 『!cal/اله حاسبة』
+『!dt/لمعرفة الوقت والتاريخ』
 『!trans <language> <any thing>/يترجم لك الي تبيه من اي لغة』
 『!short/يختصر لك رابط كبير الى رابط صغير』
 『!tag/ي��تب لك الكلمة بشكل جميل وكبير』
@@ -1266,6 +1266,248 @@ client.on('message', msg => {
 });
 
 
+const queue = new Map();
+const repeat = {};
+const loop = []  
+client.on('message', async msg => { // eslint-disable-line
+      if (msg.author.bot) return undefined;
+      if (!msg.content.startsWith(PREFIX)) return undefined;
+    
+      const args = msg.content.split(' ');
+      const searchString = args.slice(1).join(' ');
+      const url = args[1] ? args[1].replace(/<(.+)>/g, '$1') : '';
+      const serverQueue = queue.get(msg.guild.id);
+    
+      let command = msg.content.toLowerCase().split(" ")[0];
+      command = command.slice(PREFIX.length)
+    
+      if (command === `play`) {
+        const voiceChannel = msg.member.voiceChannel;
+        if (!voiceChannel) return msg.channel.send('**You Shoul Join a Voice Channe**');
+        const permissions = voiceChannel.permissionsFor(msg.client.user);
+        if (!permissions.has('CONNECT')) {
+          return msg.channel.send('**I do not have Permission to join this channel**');
+        }
+        if (!permissions.has('SPEAK')) {
+          return msg.channel.send('**I do not have Permission to speak this channel**');
+        }
+        if (!permissions.has('EMBED_LINKS')) {
+          return msg.channel.sendMessage("**I do not have Permissions `EMBED LINKS`**")
+        }
+    
+        if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+          const playlist = await youtube.getPlaylist(url);
+          const videos = await playlist.getVideos();
+          for (const video of Object.values(videos)) {
+            const video2 = await youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
+            await handleVideo(video2, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
+          }
+          return msg.channel.send(` **${playlist.title}** it have benn added to the queue`);
+        } else {
+          try {
+            var video = await youtube.getVideo(url);
+          } catch (error) {
+            try {
+              var videos = await youtube.searchVideos(searchString, 5);
+              let index = 0;
+              const embed1 = new Discord.RichEmbed()
+                  .setDescription(`**choose the video number| you only have 20s to choose** :
+    ${videos.map(video2 => `[**${++index} **] \`${video2.title}\``).join('\n')}`)
+              .setFooter("")
+              msg.channel.sendEmbed(embed1).then(message =>{message.delete(20000)})
+              
+              // eslint-disable-next-line max-depth
+              try {
+                var response = await msg.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 11, {
+                  maxMatches: 1,
+                  time: 10000,
+                  errors: ['time']
+                });
+              } catch (err) {
+                console.error(err);
+                return msg.channel.send('**the Time is over**');
+              }
+              const videoIndex = parseInt(response.first().content);
+              var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
+            } catch (err) {
+              console.error(err);
+              return msg.channel.send('**:X: I did"nt find the Search.**');
+            }
+          }
+          return handleVideo(video, msg, voiceChannel);
+        }
+      } else if (command === `skip`) {
+        if (!msg.member.voiceChannel) return msg.channel.send('**You are not in a voice channel**!');
+        if (!serverQueue) return msg.channel.send('**There is nothing playing that I could skip for you**.');
+        serverQueue.connection.dispatcher.end('**Skip command has been used**!');
+        
+        return undefined;
+      } else if (command === `stop`) {
+        if (!msg.member.voiceChannel) return msg.channel.send('**You are not in a voice channel!**');
+        if (!serverQueue) return msg.channel.send('**There is nothing playing that I could stop for you**.');
+        serverQueue.songs = [];
+        serverQueue.connection.dispatcher.end('**Stop command has been used!**');
+        return undefined;
+      } else if (command === `volume`) {
+        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!');
+        if (!serverQueue) return msg.channel.send('**There is nothing playing.**');
+        if (!args[1]) return msg.channel.send(`:loud_sound: Current volume is **${serverQueue.volume}**`);
+        serverQueue.volume = args[1];
+        serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
+        return msg.channel.send(`:speaker: The Voice Changed to **${args[1]}**`);
+      } else if (command === `np`) {
+        if (!serverQueue) return msg.channel.send('**Nothing now is playing**.');
+        const embedNP = new Discord.RichEmbed()
+      .setDescription(`:notes: Now Playing: **${serverQueue.songs[0].title}**`)
+        return msg.channel.sendEmbed(embedNP);
+      } else if (command === `queue`) {
+        if (!serverQueue) return msg.channel.send('**There is nothing playing.**');
+        let index = 0;
+        const embedqu = new Discord.RichEmbed()
+      .setDescription(`**Songs Queue**
+    
+    ${serverQueue.songs.map(song => `**${++index} -** ${song.title}`).join('\n')}
+    
+    **The Current Audio Playing** ${serverQueue.songs[0].title}`)
+        return msg.channel.sendEmbed(embedqu);
+      } else if (command === `stop`) {
+        if (serverQueue && serverQueue.playing) {
+          serverQueue.playing = false;
+          serverQueue.connection.dispatcher.pause();
+          return msg.channel.send('**The Audio have Been stoped :pause_button:** ');
+        }
+        return msg.channel.send('**There is nothing playing.**');
+      } else if (command === `resume`) {
+        if (serverQueue && !serverQueue.playing) {
+          serverQueue.playing = true;
+          serverQueue.connection.dispatcher.resume();
+          return msg.channel.send('**The Audio resumed :arrow_forward: **');
+        }
+        return msg.channel.send('**Nothing Now playing**.');
+      } else if(command === `repeatone`){
+        if(!repeat[msg.guild.id]) repeat[msg.guild.id] = {
+          loop: false,
+          queue_loop: false
+        }
+        if(repeat[msg.guild.id].loop === true) {
+          repeat[msg.guild.id].loop=false
+          msg.channel.send("ﻪﻴﻟﺎﺤﻟا ﻪﻴﻨﻏﻻا ﺭاﺮﻜﺗ ﻑﺎﻘﻳا ﻥﻻا ﻢﺘﻳ");
+        } else {
+          repeat[msg.guild.id].loop = true
+          msg.channel.send("ﻪﻴﻟﺎﺤﻟا ﻪﻴﻨﻏﻻا ﺭاﺮﻜﺗ ﻥﻻا ﻢﺘﻳ");
+
+        }
+      } else if(command === `repeatall`){
+        if(!repeat[msg.guild.id]) repeat[msg.guild.id] = {
+          loop: false,
+          queue_loop: false
+        }
+        if(repeat[msg.guild.id].queue_loop === true) {
+          repeat[msg.guild.id].queue_loop=false
+          msg.channel.send("ﻪﻴﻟﺎﺤﻟا ﻲﻧﺎﻏﻻا ﺭاﺮﻜﺗ ﻑﺎﻘﻳا ﻥﻻا ﻢﺘﻳ");
+        } else {
+          repeat[msg.guild.id].queue_loop = true
+     
+          msg.channel.send("ﻪﻴﻟﺎﺤﻟا ﻲﻧﺎﻏﻻا ﺭاﺮﻜﺗ ﻥﻻا ﻢﺘﻳ");
+
+        }
+      } 
+    
+      return undefined;
+    });
+    
+    async function handleVideo(video, msg, voiceChannel, playlist = false) {
+      const serverQueue = queue.get(msg.guild.id);
+      console.log(video);
+      
+    // console.log('yao: ' + Util.escapeMarkdown(video.thumbnailUrl));
+      const song = {
+        id: video.id,
+        title: Util.escapeMarkdown(video.title),
+        url: `https://www.youtube.com/watch?v=${video.id}`
+      };
+      if (!serverQueue) {
+        const queueConstruct = {
+          textChannel: msg.channel,
+          voiceChannel: voiceChannel,
+          connection: null,
+          songs: [],
+          volume: 5,
+          playing: true
+        };
+        queue.set(msg.guild.id, queueConstruct);
+    
+        queueConstruct.songs.push(song);
+    
+        try {
+          var connection = await voiceChannel.join();
+          queueConstruct.connection = connection;
+          play(msg.guild, queueConstruct.songs[0]);
+        } catch (error) {
+          console.error(`I could not join the voice channel: ${error}`);
+          queue.delete(msg.guild.id);
+          return msg.channel.send(`I could not join the voice channel: ${error}`);
+        }
+      } else {
+        serverQueue.songs.push(song);
+        console.log(serverQueue.songs);
+        if (playlist) return undefined;
+        else return msg.channel.send(` **${song.title}** The Audio Have been Added to the queue!`);
+      }
+      return undefined;
+    }
+    
+    function play(guild, song) {
+      const serverQueue = queue.get(guild.id);
+    
+      if (!song) {
+        serverQueue.voiceChannel.leave();
+        queue.delete(guild.id);
+        return;
+      }
+    
+      const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
+        .on('end', reason => {
+          if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
+          else console.log(reason);
+          if(repeat[guild.id].loop === true) {
+            play(guild, serverQueue.songs[0])
+          } else if(repeat[guild.id].queue_loop === true){
+          serverQueue.songs.push(song);
+          serverQueue.songs.shift();
+          play(guild, serverQueue.songs[0]);
+        } else {
+          serverQueue.songs.shift();
+          play(guild, serverQueue.songs[0]);
+        }
+        })
+        .on('error', error => console.error(error));
+      dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+    
+      serverQueue.textChannel.send(`ﻞﻴﻐﺸﺗ ءﺪﺑ: **${song.title}**`);
+    }
+client.on('message', message => {
+  var argresult = message.content.split(` `).slice(1).join(' ');
+    if (!devs.includes(message.author.id)) return;
+    
+if (message.content.startsWith(adminprefix + 'setgame')) {
+  client.user.setGame(argresult);
+    message.channel.sendMessage(`**${argresult} تم تغيير بلاينق البوت إلى **`)
+} else 
+  if (message.content.startsWith(adminprefix + 'setname')) {
+client.user.setUsername(argresult).then
+    message.channel.sendMessage(`**${argresult}** : تم تغيير أسم البوت إلى`)
+return message.reply("**لا يمكنك تغيير الاس�� يجب عليك الانتظآر لمدة ساعتين . **");
+} else
+  if (message.content.startsWith(adminprefix + 'setavatar')) {
+client.user.setAvatar(argresult);
+  message.channel.sendMessage(`**${argresult}** : تم تغير صورة الب��ت`);
+      } else     
+if (message.content.startsWith(adminprefix + 'setT')) {
+  client.user.setGame(argresult, "https://www.twitch.tv/idk");
+    message.channel.sendMessage(`**تم تغيير تويتش البوت إلى  ${argresult}**`)
+}
+});
 
 const codes = {
     ' ': '   ',
@@ -2775,7 +3017,7 @@ var aoasm =[
     {q:"ما عاصمة ** كوت ديفوار**",a:"ابيدجان"},
     {q:"ما عاصمة **كرواتيا **",a:"زغرب"},
     {q:"ما عاصمة ** كوبا**",a:"هافانا"},
-    {q:"ما عاصمة ** قبرص**",a:" "},
+    {q:"ما عاصمة ** ق��رص**",a:" "},
     {q:"ما عاصمة ** جمهورية التشيك**",a:"براغ"},
     {q:"ما عاصمة **الدنمارك **",a:"كوبنهاجن"},
     {q:"ما عاصمة ** جيبوتى**",a:"جيبوتى"},
@@ -3285,7 +3527,7 @@ var prefix = "!";
 if(message.channel.type === "dm") return;
 if(message.author.bot) return;
   if(!sWlc[message.guild.id]) sWlc[message.guild.id] = {
-    channel: "♛𝓦𝓔𝓛𝓒𝓞𝓜𝓔♛"
+    channel: "welcome"
 }
 const channel = sWlc[message.guild.id].channel
   if (message.content.startsWith(prefix + "setwelcomer")) {
