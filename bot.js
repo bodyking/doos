@@ -3419,7 +3419,7 @@ client.on('message', message => {
      let embed = new Discord.RichEmbed()
   .setAuthor(message.author.username)
   .setColor("#9B59B6")
-  .addField(" ** :gear: Server Support :gear: **" , "  **https://discord.gg/yDHQZhC**")
+  .addField(" ** :gear: Server Support :gear: **" , "  **https://discord.gg/zY2djP2**")
      
      
   message.channel.sendEmbed(embed);
