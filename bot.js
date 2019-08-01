@@ -269,36 +269,6 @@ client.on('message', function(message) {
 });
 
 
-
-const bannedwords = [
-    "كس امك",
-    "كسامك",
-    "كلب",
-    "عرص",
-     "معرص",
-    "يابن الكلب",
-    "حيوان",
-     "خول",
-    "جرار",
-    "قحبه",
-    "يا كسمك",
-    "يا متناك",
-    "يامتناك",
-    "طيز",
-    "كسس",
-    "كس",
-    "متناكك"
-  ];
-
-client.on('message',  message => {
-  if(bannedwords.some(word => message.content.includes(word))) {
-    message.delete()
-    message.reply(" :rage: ممنوع السب والقذف  ").then(msg => {msg.delete(3000)});;
-  };
-});
-
-
-
 client.on('message' , message => {
   if(message.author.bot) return;
   if(message.content.startsWith(prefix + "ping")) {
